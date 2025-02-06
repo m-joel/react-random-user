@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios"; // Import Axios for API calls
 import FilterInputForm from "./components/FilterInputForm"; // Import FilterInputForm component
 import FetchedUserList from "./components/FetchedUserList"; // Import FetchedUserList component
+import { Spinner, Container } from "react-bootstrap"; // Import Spinner for loading
 import "./App.css"; // Import styles
 
 const App = () => {
@@ -29,13 +30,19 @@ const App = () => {
   };
 
   return (
-    <div className="container">
-      <h1>Random User Generator</h1>
-      {/* Pass fetchUsers function to FilterInputForm component */}
+    <Container className="mt-4">
+      <h1 className="text-center">Random User Generator</h1>
       <FilterInputForm onFetchUsers={fetchUsers} />
-      {/* Show loading message or user list */}
-      {loading ? <p>Loading...</p> : <FetchedUserList users={users} />}
-    </div>
+
+      {/* Show spinner while loading */}
+      {loading ? (
+        <div className="d-flex justify-content-center mt-4">
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
+        <FetchedUserList users={users} />
+      )}
+    </Container>
   );
 };
 
